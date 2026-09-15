@@ -15,13 +15,14 @@ public class Collectables : MonoBehaviour
         {
             score++;
             scoreText.text = score.ToString();
-            
+
             Vector3 coinPosition = other.transform.position;
 
             ParticleSystem effect = Instantiate(effectInspector, coinPosition, Quaternion.identity);
 
             Destroy(effect.gameObject, effect.main.duration);
-           
+
+
             Destroy(other.gameObject);
         }
     }
