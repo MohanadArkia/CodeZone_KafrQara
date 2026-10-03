@@ -1,41 +1,46 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
-    float damage = 10f;
+    public float damage;
     float maxDistance = 100f;
     public Camera cam;
     public ParticleSystem particle;
-
-    Animator animator;
+    public Animator animator;
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
     }
 
-    void OnAttack(InputValue inputValue)
+    void Update()
     {
-        if (inputValue.isPressed)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Shoot();
+            animator.SetBool("isShooting", true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            animator.SetBool("isShooting", false);
         }
     }
 
     void Shoot()
     {
         RaycastHit hit;
-        //FindFirstObjectByType<AudioManager>().Play("AkSound");
-        // particle.Play();
+        FindFirstObjectByType<AudioManager>().Play("AkSound");
+        particle.Play();
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDistance)) {
-            // Target target = hit.transform.GetComponent<Target>();
-            // if (target != null)
-            // {
-            //     target.TakeDamage(damage);
-            // }
-            Debug.Log(hit.transform.name);
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxDistance))
+        {
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null)
+            {
+                target.TakeDamage(damage);
+            }
         }
     }
 }

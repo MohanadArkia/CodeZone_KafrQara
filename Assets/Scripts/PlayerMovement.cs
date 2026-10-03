@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Camera cam;
 
+
+    public WeaponSway sway;
+    // public Animator weaponAnimator;
+
     void MoveMouse()
     {
         mouseX = MouseInputVector.x;
@@ -34,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     void OnLook(InputValue inputValue)
     {
         MouseInputVector = inputValue.Get<Vector2>();
+        sway.SetLookInput(MouseInputVector);
     }
 
     void OnMove(InputValue inputValue)
@@ -50,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
+        // weaponAnimator = transform.Find("ActiveWeapon").GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -66,39 +72,6 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.linearVelocity = velocity;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-        mouseX = _playerInputController.MouseInputVector.x;
-        mouseY = _playerInputController.MouseInputVector.y;
-
-        xRotation -= mouseY * Time.deltaTime * _yMouseSensitivity;
-        xRotation = Mathf.Clamp(xRotation, minAngle, maxAngle);
-
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * _xMouseSensitivity);
-*/
-
-
-
-/*
-        velocity.x = (transform.right * _playerInputController.MovementInputVector.x + transform.forward * _playerInputController.MovementInputVector.y).x * _playerSpeed;
-
-        velocity.z = (transform.right * _playerInputController.MovementInputVector.x + transform.forward * _playerInputController.MovementInputVector.y).z * _playerSpeed;
-*/
-
-
 
 /*
 Gun.cs
